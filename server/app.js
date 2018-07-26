@@ -1,7 +1,7 @@
 const cookieParser = require('cookie-parser');
-const bodyParser = require('bodyParser');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const jwt = require('express=jwt');
+const jwt = require('express-jwt');
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
@@ -64,30 +64,33 @@ app.use((req, res, next) => {
 });
 
 // JWT AUTH
-app.use(jwt({ secret: process.env.JWT_SECRET })
-    .unless({ path: insecureRoutes }));
+app.use(jwt({secret: process.env.JWT_SECRET})
+.unless({
+    path: insecureRoutes
+}));
 
-app.use( async (req, res, nexy) => {
-    if (req.method === 'OPTIONS' || isInsecurePage(req.path)) {
+app.use( async ( req, res, next ) => {
+    if( req.method === 'OPTIONS' || isInsecurePage(req.path) ) {
         return next();
-    }
+    } 
     try {
-        const authHeader = req.get('Authorization');
-        const token = authHeader ? authHeader.split(' ')[1].split('.')[1] : null;
+        const authHeader = req.get( 'Authorization' );
+        const token = authHeader ? authHeader.split( ' ' )[ 1 ].split('.')[1] : null;
         const tokenBase64 = new Buffer(token, 'base64');
         const tokenData = JSON.parse(tokenBase64.toString('ascii'));
-        if (!tokenData.id) {
+        if ( !tokenData.id ) {
             throw new Error();
         }
-        const user = await User.findById(tokenData.id);
-        if (!user || user.secStamp !== tokenData.secStamp ) {
+        const user = await User.findById( tokenData.id );
+        if ( !user || user.secStamp !== tokenData.secStamp ) {
             throw new Error();
         }
         req.user = user;
-    } catch (e) {
-        let err = new Error('Invalid Token');
+        next();
+    } catch( e ) {
+        let err = new Error( 'Token Invalid' );
         err.name = 'UnauthorizedError';
-        next(err);
+        next( err );
     }
 });
 
@@ -95,7 +98,7 @@ app.use( async (req, res, nexy) => {
 app.use(express.static(__dirname + '/public'));
 
 //Mongoose Connection
-mongooose.connect(process.env.DEVELOPMENT_DATABASE);
+mongoose.connect(process.env.DEVELOPMENT_DATABASE);
 
 mongoose.connection.on('connected', (req, res, next) => {
     console.log(`Connected to ${app.get('env')} database`);
