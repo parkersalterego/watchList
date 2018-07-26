@@ -1,0 +1,48 @@
+<!-- LOGIN FORM -->
+<div *ngIf="logRegSelector">
+  <form (ngSubmit)="onLogRegSubmit(f)" #f="ngForm">
+
+    <div class="group">
+      <label for="email">Email</label>
+      <input type="email" name="email" ngModel>
+    </div>
+  
+    <div class="group">
+      <label for="password">Password</label>
+      <input type="password" name="password" ngModel>
+    </div>
+  
+    <input type="submit">
+  </form>
+</div>
+
+<!-- REGISTER FORM -->
+<div *ngIf="!logRegSelector">
+  <form (ngSubmit)="onLogRegSubmit(f)" #f="ngForm">
+
+    <div class="group">
+      <label for="username">Username</label>
+      <input type="text" name="username" ngModel>
+    </div>
+
+    <div class="group">
+      <label for="email">Email</label>
+      <input type="email" name="email" ngModel>
+    </div>
+  
+    <div class="group">
+      <label for="password">Password</label>
+      <input type="password" name="password" ngModel>
+    </div>
+  
+    <input type="submit">
+  </form>
+</div>
+
+<!-- SELECTORS FOR LOG AND REG FORMS -->
+<div class="selectors">
+  <p><a href="#" (click)="logRegSelector = true">Login</a></p>
+  <p><a href="#" (click)="logRegSelector = false">Register</a></p>
+</div>
+
+  
