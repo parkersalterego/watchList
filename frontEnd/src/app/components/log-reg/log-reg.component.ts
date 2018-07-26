@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-
+import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { JwtHelper } from 'angular2-jwt';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
@@ -19,6 +19,7 @@ export class LogRegComponent implements OnInit {
   logRegSelector = true;
 
   constructor(
+              private userService: UserService,
               private authService: AuthService,
               private jwtHelper: JwtHelper,
               private cookieService: CookieService ,
@@ -51,9 +52,10 @@ export class LogRegComponent implements OnInit {
           console.log('an error occured');
         } else {
           this.cookieService.put('authToken', JSON.stringify(data.accessToken));
-          this.userService.getUserById(this.jwtHelper.decodeToken(data.accessToken.id))
-            .subscribe(user => {
-              this.userService.user = user;
+          this.userService.getUserById()
+            .subscribe(userObj => {
+              console.log(userObj);
+              this.userService.user = userObj;
               this.router.navigate(['/dashboard']);
             });
         }

@@ -12,12 +12,14 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
+import { DahboardComponent } from './components/dahboard/dahboard.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LogRegComponent
+    LogRegComponent,
+    DahboardComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import { UserService } from './services/user.service';
   providers: [
     JwtHelper,
     CookieService,
-    AuthService
+    AuthService,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })

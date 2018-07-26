@@ -95,6 +95,7 @@ class UserController {
 
     async getUserById(req, res, next) {
         try {
+            console.log('HITTING');
             const user = await User.findOne({'_id' : req.params._id, 'is_deleted' : false}, {'password' : 0});
                 res.status(200).json(user);
         } catch(err) {
