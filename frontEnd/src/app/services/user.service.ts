@@ -31,4 +31,7 @@ export class UserService {
     return this.http.get(`${environment.api}/users/${id}`, {headers : headers})
       .pipe(map(res => res.json()));
   }
+
 }
+
+

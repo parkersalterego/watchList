@@ -54,7 +54,6 @@ export class LogRegComponent implements OnInit {
           this.cookieService.put('authToken', JSON.stringify(data.accessToken));
           this.userService.getUserById()
             .subscribe(userObj => {
-              console.log(userObj);
               this.userService.user = userObj;
               this.router.navigate(['/dashboard']);
             });
@@ -65,7 +64,13 @@ export class LogRegComponent implements OnInit {
   registerUser(user) {
     this.authService.registerUser(user)
       .subscribe(data => {
-        console.log(data);
+        if (!data.error) {
+          // @TODO flash message
+          console.log('registered successfully');
+        } else {
+          // @TODO flash message
+          console.log('unable to register');
+        }
       });
   }
 

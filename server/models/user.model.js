@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: 'generalUser'
     },
+    lists: {
+        type: Array,
+        default: []
+    },
     secStamp: String,
     refreshToken: String,
     is_deleted: {
