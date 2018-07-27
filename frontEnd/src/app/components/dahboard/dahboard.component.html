@@ -1,3 +1,21 @@
-<p>
-  dahboard works!
-</p>
+<h1>Watch List</h1>
+<hr>
+<h3>Create New List</h3>
+<form (ngSubmit)="onlistFormSubmit(f)" #f="ngForm">
+  <div class="group">
+    <label for="title">Title</label>
+    <input type="text" name="title" ngModel #listTitleInput>
+  </div>
+
+  <input type="submit">
+</form>
+<br>
+<h3>Your Lists</h3>
+<hr>
+<ul *ngFor="let listItem of listItems; let i = index">
+  <li>
+    <a href="#">{{listItem.title}}</a>
+    <i (click)="onDeleteClick(i)" class="fas fa-times"></i>
+    <i (click)="onEditClick(i)" class="fas fa-pencil-alt"></i>
+  </li>
+</ul>

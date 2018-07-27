@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+.group {
+  display: inline;
+
+  & input {
+    margin-left: 10px;
+  }
+
+}
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+  border-bottom: solid 1px #000;
+}
